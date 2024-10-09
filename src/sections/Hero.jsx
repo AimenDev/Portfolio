@@ -1,24 +1,39 @@
 import React from "react";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const Hero = () => {
   return (
     <section className="mt-16 sm:p-10 flex items-start flex-col " id="about">
-      <div className="sm:px-16 py-8 mt-10">
+      <div className="relative sm:px-16 py-8 mt-10 z-10">
         <a href="/">
           <img src="/images-modified.png" alt="Logo" width={80} height={50} />
         </a>
       </div>
-      <div className="flex flex-col flex-wrap gap-4 md:gap-6 px-4 md:px-16 w-full lg:w-2/3 ">
-        <h1 className="text-3xl md:text-4xl font-sans font-bold text-white leading-snug">
-          Software designer, founder, and amateur astronaut.
-        </h1>
-        <p className="text-sm md:text-lg font-sans text-neutral-400 leading-snug">
-          I’m Spencer, a software designer and entrepreneur based in New York
-          City. I’m the founder and CEO of Planetaria, where we develop
-          technologies that empower regular people to explore space on their own
-          terms.
+
+      <div className="relative z-10 flex flex-col flex-wrap gap-4 md:gap-6 px-4 md:px-16 w-full lg:w-2/3">
+      <h1 className="text-3xl md:text-4xl font-fira font-semibold text-white">
+        Hi, I'm Aimen.
+      </h1>
+        <h3 className="text-3xl md:text-4xl mr-8 font-sans font-bold text-white leading-snug">
+          Web developer, designer, and technology enthusiast.
+        </h3>
+        <p className="text-sm md:text-lg mb-8 font-sans text-neutral-400 leading-snug">
+          A passionate web developer specializing in creating dynamic
+          and responsive websites. I have a strong background in both front-end
+          and back-end development, building seamless user experiences and
+          efficient web applications.
         </p>
       </div>
+
+      <div className="hidden absolute mt-10 right-0 lg:w-1/2 lg:flex lg:flex-end items-center z-0">
+        <Player
+          autoplay
+          loop
+          src="/Animation.json"
+          style={{ height: "300px", width: "300px" }} // Adjust the size as needed
+        />
+      </div>
+
       <div className="flex justify-between flex-wrap px-4 md:px-16">
         <div className="px-4 md:px-16 flex space-x-4 md:space-x-6 mt-8">
           {/* Instagram */}
@@ -105,7 +120,9 @@ const Hero = () => {
             </button>
 
             {/* Explanation Text */}
-            <p className="text-neutral-400 text-md font-sans">(No Cv for now).</p>
+            <p className="text-neutral-400 text-md font-sans">
+              (No Cv for now).
+            </p>
           </div>
         </div>
       </div>

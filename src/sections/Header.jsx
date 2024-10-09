@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, MoonStar, SunMoon, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -70,7 +70,7 @@ const Header = () => {
         <ul className='font-sans text-2xl text-gray-100 w-full '>
           <li className='w-full'>
             <a
-              href="/about"
+              href="#about"
               className='block text-center py-4 hover:bg-zinc-700 border-b border-zinc-700 transition-colors duration-200'
               onClick={toggleMenu}
             >
@@ -79,7 +79,7 @@ const Header = () => {
           </li>
           <li className='w-full'>
             <a
-              href="/projects"
+              href="#projects"
               className='block text-center py-4 hover:bg-zinc-700 border-b border-zinc-700 transition-colors duration-200'
               onClick={toggleMenu}
             >
@@ -88,16 +88,16 @@ const Header = () => {
           </li>
           <li className='w-full'>
             <a
-              href="/speaking"
+              href="#skills"
               className='block text-center py-4 hover:bg-zinc-700 border-b border-zinc-700 transition-colors duration-200'
               onClick={toggleMenu}
             >
-              Speaking
+              Skills
             </a>
           </li>
           <li className='w-full'>
             <a
-              href="/contact"
+              href="#about"
               className='block text-center py-4 hover:bg-zinc-700 transition-colors duration-200'
               onClick={toggleMenu}
             >
