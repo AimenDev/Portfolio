@@ -2,8 +2,8 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <section className="mt-10 flex flex-col ">
-      <div className="px-16 py-8">
+    <section className="mt-16 sm:p-10 flex items-start flex-col " id="about">
+      <div className="sm:px-16 py-8 mt-10">
         <a href="/">
           <img src="/images-modified.png" alt="Logo" width={80} height={50} />
         </a>
@@ -19,7 +19,7 @@ const Hero = () => {
           terms.
         </p>
       </div>
-      <div className='px-4 md:px-16 flex space-x-4 md:space-x-6 mt-8'>
+      <div className="px-4 md:px-16 flex space-x-4 md:space-x-6 mt-8">
         {/* Instagram */}
         <a
           href="https://www.instagram.com"
@@ -83,7 +83,7 @@ const Hero = () => {
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M24 4.557a9.929 9.929 0 01-2.828.775 4.975 4.975 0 002.164-2.724 9.949 9.949 0 01-3.127 1.2A4.93 4.93 0 0016.92 3c-2.723 0-4.938 2.208-4.938 4.927 0 .386.045.762.126 1.124-4.103-.205-7.736-2.164-10.18-5.144a4.903 4.903 0 00-.666 2.477c0 1.71.873 3.22 2.188 4.102a4.905 4.905 0 01-2.23-.616v.061c0 2.388 1.688 4.378 3.925 4.837a4.908 4.908 0 01-2.224.085c.629 1.953 2.448 3.38 4.6 3.419A9.867 9.867 0 010 19.54a13.93 13.93 0 007.548 2.211c9.055 0 14.004-7.485 14.004-13.952 0-.213-.005-.426-.014-.637A10.003 10.003 0 0024 4.557z" />
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
           </svg>
         </a>
       </div>
