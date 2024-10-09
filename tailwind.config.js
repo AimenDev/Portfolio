@@ -5,6 +5,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Open Sans", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
+        fira: ["Fira Code", "monospace"],
       },
     },
   },

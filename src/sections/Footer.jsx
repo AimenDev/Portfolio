@@ -7,7 +7,7 @@ const Footer = () => {
         {/* Copyright Info */}
         <div className="text-center md:text-left mb-4 md:mb-0">
           <span className="text-gray-400 text-sm font-semibold">
-            2024 &copy; Portfolio. Built by AimenDev
+          &copy; 2024 Aimen Portfolio. All rights reserved.
           </span>
         </div>
         
@@ -24,7 +24,7 @@ const Footer = () => {
               <a href="#skills" className="hover:text-emerald-400 transition-colors duration-200">Skills</a>
             </li>
             <li>
-              <a href="#contact" className="hover:text-emerald-400 transition-colors duration-200">Contact</a>
+              <a href="#about" className="hover:text-emerald-400 transition-colors duration-200">Contact</a>
             </li>
           </ul>
         </div>
