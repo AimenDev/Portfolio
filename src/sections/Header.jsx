@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from "lucide-react";
+import { Menu, Sun, SunMoon, X,  } from "lucide-react";
+
+
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollingUp, setScrollingUp] = useState(true);
   const [lastScrollPos, setLastScrollPos] = useState(0);
+  const [theme, setTheme] = useState(false);
+
+  const toggleTheme = () => {
+    setTheme(!theme);
+  };
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -33,13 +40,13 @@ const Header = () => {
   }, [lastScrollPos]);
 
   return (
-    <header className='flex items-center justify-center mb-10 '>
+    <header className={`${theme && "dark"} flex items-center justify-center mb-10 `}>
       <nav
         className={`mt-20 z-20 fixed hidden md:flex px-10 py-3 bg-zinc-800/backdrop-blur-md rounded-full shadow-lg transition-transform duration-500 ${
           scrollingUp ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
-        <ul className='flex space-x-10 font-sans text-sm text-gray-100'>
+        <ul className='flex space-x-10 font-sans text-sm text-gray-100 dark:text-black'>
           <li>
             <a href="#about" className='hover:text-emerald-400 transition-colors duration-200 '>About</a>
           </li>
@@ -54,7 +61,9 @@ const Header = () => {
           </li>
         </ul>
       </nav>
-
+      <button onClick={toggleTheme} className="absolute top-7 z-30 sm:ml-[60%] ml-28 p-2 text-gray-100 bg-zinc-700 rounded-full">
+        {theme ? <Sun size={24} /> : <SunMoon size={24} />}
+      </button>
       <button
         onClick={toggleMenu}
         className="bg-zinc-700 text-gray-100 p-3 absolute rounded-full md:hidden top-6 right-10 z-30 shadow-lg"

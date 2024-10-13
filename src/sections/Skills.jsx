@@ -4,7 +4,7 @@ const Skills = () => {
   const skills = {
     frontend: ["JavaScript", "HTML", "CSS", "React", "Next.js", "Tailwind CSS"],
     backend: ["Node.js", "Express", "MongoDB", "GraphQL", "REST APIs"],
-    tools: ["Git", "Vercel", "Figma", "Postman", "Visual Studio Code"],
+    tools: ["Git", "Vercel", "Docker", "Postman", "Visual Studio Code"],
   };
 
   return (
