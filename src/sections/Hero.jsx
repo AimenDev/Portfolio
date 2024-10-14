@@ -11,13 +11,13 @@ const Hero = () => {
       </div>
 
       <div className="relative z-10 flex flex-col flex-wrap gap-4 md:gap-6 px-4 md:px-16 w-full lg:w-2/3">
-      <h1 className="text-3xl md:text-4xl font-fira font-semibold text-white">
+      <h1 className="text-3xl md:text-4xl font-fira font-semibold text-white dark:text-neutral-900">
         Hi, I'm Aimen.
       </h1>
-        <h3 className="text-2xl md:text-3xl mr-8 font-sans font-bold text-white leading-snug">
+        <h3 className="text-2xl md:text-3xl mr-8 font-sans font-bold text-white dark:text-neutral-900  leading-snug">
           Web developer, designer, and technology enthusiast.
         </h3>
-        <p className="text-lg mb-8 font-sans text-neutral-400 leading-snug">
+        <p className="text-lg mb-8 font-sans text-neutral-400 dark:text-neutral-600 leading-snug">
           A passionate web developer specializing in creating dynamic
           and responsive websites. I have a strong background in both front-end
           and back-end development, building seamless user experiences and
@@ -44,7 +44,7 @@ const Hero = () => {
             className="hover:text-white transition-colors duration-200"
           >
             <svg
-              className="w-6 h-6 text-neutral-400 hover:text-white"
+              className="w-6 h-6 text-neutral-400 dark:text-neutral-600 hover:text-white"
               fill="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +62,7 @@ const Hero = () => {
             className="hover:text-white transition-colors duration-200"
           >
             <svg
-              className="w-6 h-6 text-neutral-400 hover:text-white"
+              className="w-6 h-6 text-neutral-400 dark:text-neutral-600 hover:text-white"
               fill="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@ const Hero = () => {
             className="hover:text-white transition-colors duration-200"
           >
             <svg
-              className="w-6 h-6 text-neutral-400 hover:text-white"
+              className="w-6 h-6 text-neutral-400 dark:text-neutral-600 hover:text-white"
               fill="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +94,7 @@ const Hero = () => {
             className="hover:text-white transition-colors duration-200"
           >
             <svg
-              className="w-6 h-6 text-neutral-400 hover:text-white"
+              className="w-6 h-6 text-neutral-400 dark:text-neutral-600 hover:text-white"
               fill="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +120,7 @@ const Hero = () => {
             </button>
 
             {/* Explanation Text */}
-            <p className="text-neutral-400 text-md font-sans">
+            <p className="text-neutral-400 dark:text-neutral-600 text-md font-sans">
               (No Cv for now).
             </p>
           </div>
