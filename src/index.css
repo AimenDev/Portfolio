@@ -6,7 +6,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 html {
   scroll-behavior: smooth;
 }
@@ -17,5 +16,5 @@ body {
 }
 
 body {
-  @apply bg-black dark:bg-zinc-300;
+  @apply bg-neutral-900 dark:bg-zinc-300;
 }

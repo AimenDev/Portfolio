@@ -1,8 +1,8 @@
-import Header from './sections/Header.jsx'
-import Hero from './sections/Hero'
-import Main from './sections/Main'
-import Footer from './sections/Footer'
-import Skills from './sections/Skills.jsx'
+import Header from "./sections/Header.jsx";
+import Hero from "./sections/Hero";
+import Main from "./sections/Main";
+import Footer from "./sections/Footer";
+import Skills from "./sections/Skills.jsx";
 import scrollreveal from "scrollreveal";
 import { useEffect } from "react";
 
@@ -27,14 +27,14 @@ const App = () => {
     );
   }, []);
   return (
-    <main className="bg-zinc-800 dark:bg-white space-y-8 shadow-lg w-full sm:w-[90%] 2xl:w-[65%] mx-auto py-0 px-7">
-        <Header />
-        <Hero />
-        <Main />
-        <Skills />
-        <Footer />
+    <main className="bg-zinc-800 dark:bg-zinc-100 space-y-8 shadow-lg w-full sm:w-[90%] 2xl:w-[65%] mx-auto py-0 px-7">
+      <Header />
+      <Hero />
+      <Main />
+      <Skills />
+      <Footer />
     </main>
-  )
-}
+  );
+};
 
-export default App
+export default App;
