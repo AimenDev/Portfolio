@@ -479,4 +479,4 @@ PERFORMANCE OF THIS SOFTWARE.
         #projects,
         #skills,
         footer
-        `,{opacity:0,interval:300})},[]),jsxRuntimeExports.jsxs("main",{className:"bg-zinc-800 dark:bg-white space-y-8 shadow-lg w-full sm:w-[90%] 2xl:w-[65%] mx-auto py-0 px-7",children:[jsxRuntimeExports.jsx(Header,{}),jsxRuntimeExports.jsx(Hero,{}),jsxRuntimeExports.jsx(Main,{}),jsxRuntimeExports.jsx(Skills,{}),jsxRuntimeExports.jsx(Footer,{})]}));createRoot(document.getElementById("root")).render(jsxRuntimeExports.jsx(reactExports.StrictMode,{children:jsxRuntimeExports.jsx(App,{})}));
+        `,{opacity:0,interval:300})},[]),jsxRuntimeExports.jsxs("main",{className:"bg-zinc-800 dark:bg-zinc-100 space-y-8 shadow-lg w-full sm:w-[90%] 2xl:w-[65%] mx-auto py-0 px-7",children:[jsxRuntimeExports.jsx(Header,{}),jsxRuntimeExports.jsx(Hero,{}),jsxRuntimeExports.jsx(Main,{}),jsxRuntimeExports.jsx(Skills,{}),jsxRuntimeExports.jsx(Footer,{})]}));createRoot(document.getElementById("root")).render(jsxRuntimeExports.jsx(reactExports.StrictMode,{children:jsxRuntimeExports.jsx(App,{})}));
