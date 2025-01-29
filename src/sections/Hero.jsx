@@ -1,5 +1,6 @@
 import React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
+import { FileText, Mail } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -103,25 +104,29 @@ const Hero = () => {
             </svg>
           </a>
         </div>
-        <div className="flex space-x-4 mt-8">
+        <div className="flex flex-wrap items-center justify-center space-x-4 space-y-4 mt-8 sm:space-x-2 sm:space-y-2">
+          {/* Contact Me Button */}
           <button
             onClick={() =>
               (window.location.href =
                 "mailto:aimendev4@gmail.com?subject=Hello&body=I%20would%20like%20to%20know%20more%20about%20your%20services.")
             }
-            className="p-2 sm:px-6 sm:py-2 border border-emerald-400 text-emerald-400 rounded-full shadow-lg hover:bg-emerald-400 hover:text-white transition-colors duration-300"
+            className="flex items-center justify-center space-x-2 p-2 sm:px-4 sm:py-2 border border-emerald-400 text-emerald-400 rounded-full shadow-lg hover:bg-emerald-400 hover:text-white transition-colors duration-300 w-full sm:w-auto"
           >
-            Contact Me
+            <Mail className="w-5 h-5" />
+            <span>Contact Me</span>
           </button>
 
-          <div className="flex items-center space-x-2">
-            <button className="px-3 py-1 sm:px-6 sm:py-2 bg-emerald-400 text-white rounded-full shadow-lg hover:bg-transparent hover:text-emerald-400 border border-emerald-400 transition-colors duration-300">
-              See Cv
+          {/* See CV Section */}
+          <div className="flex flex-col sm:flex-row items-center space-x-0 sm:space-x-2 space-y-2 sm:space-y-0 w-full sm:w-auto">
+            <button className="flex items-center justify-center space-x-2 p-2 sm:px-4 sm:py-2 bg-emerald-400 text-white rounded-full shadow-lg hover:bg-transparent hover:text-emerald-400 border border-emerald-400 transition-colors duration-300 w-full sm:w-auto">
+              <FileText className="w-5 h-5" />
+              <span>See CV</span>
             </button>
 
             {/* Explanation Text */}
-            <p className="text-neutral-400 dark:text-neutral-600 text-md font-sans">
-              (No Cv for now).
+            <p className="text-neutral-400 dark:text-neutral-600 text-sm text-center sm:text-left">
+              (No CV for now).
             </p>
           </div>
         </div>
