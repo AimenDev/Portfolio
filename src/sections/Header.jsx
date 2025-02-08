@@ -1,128 +1,160 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, Sun, SunMoon, X } from "lucide-react";
+import React, { useState, useEffect, useCallback } from 'react';
+import { Menu, Sun, Moon, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollingUp, setScrollingUp] = useState(true);
   const [lastScrollPos, setLastScrollPos] = useState(0);
-  const [theme, setTheme] = useState(false); // Light mode by default
+  const [theme, setTheme] = useState(() => {
+    // Check if user has a saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme === 'dark';
+  });
 
-  const toggleTheme = () => {
-    setTheme(!theme);
-  };
+  const toggleTheme = useCallback(() => {
+    setTheme(prev => {
+      const newTheme = !prev;
+      localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+      return newTheme;
+    });
+  }, []);
+
+  const toggleMenu = useCallback(() => {
+    setMenuOpen(prev => !prev);
+    // Prevent scrolling when menu is open
+    document.body.style.overflow = !menuOpen ? 'hidden' : 'unset';
+  }, [menuOpen]);
 
   useEffect(() => {
     if (theme) {
-      document.documentElement.classList.add('dark'); // Add 'dark' class to <html>
+      document.documentElement.classList.add('dark');
     } else {
-      document.documentElement.classList.remove('dark'); // Remove 'dark' class from <html>
+      document.documentElement.classList.remove('dark');
     }
-  }, [theme]); // Effect depends on 'theme' state
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  }, [theme]);
 
   useEffect(() => {
+    let lastKnownScrollPosition = 0;
+    let ticking = false;
+
     const handleScroll = () => {
-      const currentScrollPos = window.scrollY;
+      lastKnownScrollPosition = window.scrollY;
 
-      if (currentScrollPos > lastScrollPos) {
-        setScrollingUp(false);
-      } else {
-        setScrollingUp(true);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (lastKnownScrollPosition > lastScrollPos) {
+            setScrollingUp(false);
+          } else {
+            setScrollingUp(true);
+          }
+          setLastScrollPos(lastKnownScrollPosition);
+          ticking = false;
+        });
+        ticking = true;
       }
-
-      setLastScrollPos(currentScrollPos);
     };
 
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollPos]);
+
+  const navItems = [
+    { href: "#about", label: "About" },
+    { href: "#projects", label: "Projects" },
+    { href: "#skills", label: "Skills" },
+    { href: "#contact", label: "Contact" }
+  ];
+
+  const NavLinks = ({ mobile = false, onClick }) => (
+    <ul className={`${mobile ? 'text-2xl w-full' : 'flex space-x-10 text-sm'} font-sans text-gray-100 dark:text-black`}>
+      {navItems.map(({ href, label }, index) => (
+        <li key={href} className={mobile ? 'w-full' : ''}>
+          <a
+            href={href}
+            onClick={onClick}
+            className={`${
+              mobile
+                ? 'block text-center py-4 hover:bg-zinc-700 dark:hover:bg-white/10 border-b border-zinc-700/50 last:border-none'
+                : 'hover:text-emerald-400'
+            } transition-all duration-200 relative group`}
+          >
+            {label}
+            {!mobile && (
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-400 transition-all duration-200 group-hover:w-full" />
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
 
   return (
     <header className="flex items-center justify-center mb-10">
-      <nav
-        className={`mt-20 z-20 fixed hidden md:flex px-10 py-3 bg-zinc-800 dark:bg-white backdrop-blur-md rounded-full shadow-lg transition-transform duration-500 ${
-          scrollingUp ? 'translate-y-0' : '-translate-y-full'
-        }`}
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ 
+          y: scrollingUp ? 0 : -100,
+          transition: { type: "spring", stiffness: 100, damping: 20 }
+        }}
+        className="mt-20 z-20 fixed hidden md:flex px-10 py-3 bg-zinc-800/95 dark:bg-white/95 backdrop-blur-md rounded-full shadow-lg"
       >
-        <ul className='flex space-x-10 font-sans  text-sm text-gray-100 dark:text-black'>
-          <li>
-            <a href="#about" className='hover:text-emerald-400 transition-colors duration-200 '>About</a>
-          </li>
-          <li>
-            <a href="#projects" className='hover:text-emerald-400 transition-colors duration-200'>Projects</a>
-          </li>
-          <li>
-            <a href="#skills" className='hover:text-emerald-400 transition-colors duration-200'>Skills</a>
-          </li>
-          <li>
-            <a href="#about" className='hover:text-emerald-400 transition-colors duration-200'>Contact</a>
-          </li>
-        </ul>
-      </nav>
-      <button onClick={toggleTheme} className="absolute top-7 z-30 sm:ml-[60%] ml-28 p-2 text-gray-100 bg-zinc-700 dark:bg-white dark:shadow-lg rounded-full">
-        {theme ? <Sun className='dark:text-emerald-400 ' size={24} /> : <SunMoon  size={24} />}
-      </button>
-      <button
+        <NavLinks />
+      </motion.nav>
+
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={toggleTheme}
+        aria-label={theme ? "Switch to light mode" : "Switch to dark mode"}
+        className="absolute top-7 z-30 sm:ml-[60%] ml-28 p-2 text-gray-100 bg-zinc-700 dark:bg-white dark:shadow-lg rounded-full hover:ring-2 hover:ring-emerald-400 transition-all duration-200"
+      >
+        {theme ? (
+          <Sun className="dark:text-emerald-400" size={24} />
+        ) : (
+          <Moon className="text-emerald-400" size={24} />
+        )}
+      </motion.button>
+
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
         onClick={toggleMenu}
-        className="bg-zinc-700 dark:bg-white dark:shadow-lg text-gray-100 p-3 absolute rounded-full md:hidden top-6 right-10 z-30 shadow-lg"
+        aria-label={menuOpen ? "Close menu" : "Open menu"}
+        aria-expanded={menuOpen}
+        className="bg-zinc-700 dark:bg-white dark:shadow-lg text-gray-100 p-3 absolute rounded-full md:hidden top-6 right-10 z-30 shadow-lg hover:ring-2 hover:ring-emerald-400 transition-all duration-200"
       >
-        {menuOpen ? <X className='dark:text-emerald-400' size={24} /> : <Menu className='dark:text-emerald-400' size={24} />}
-      </button>
+        {menuOpen ? (
+          <X className="dark:text-emerald-400" size={24} />
+        ) : (
+          <Menu className="dark:text-emerald-400" size={24} />
+        )}
+      </motion.button>
 
-      <nav
-        className={`fixed inset-0 z-20 bg-zinc-800/90 dark:bg-transparent dark:backdrop-blur-xl backdrop-blur-md p-10 flex flex-col space-y-4 items-center justify-center transform ${
-          menuOpen ? 'translate-x-0' : 'translate-x-full'
-        } transition-transform duration-300 ease-in-out md:hidden`}
-      >
-        <ul className='font-sans text-2xl text-gray-100 dark:text-black w-full '>
-          <li className='w-full'>
-            <a
-              href="#about"
-              className='block text-center py-4 hover:bg-zinc-700 border-b border-zinc-700 transition-colors duration-200'
-              onClick={toggleMenu}
+      <AnimatePresence>
+        {menuOpen && (
+          <>
+            <motion.nav
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 20 }}
+              className="fixed inset-0 z-20 bg-zinc-800/95 dark:bg-white/95 backdrop-blur-md p-10 flex flex-col space-y-4 items-center justify-center md:hidden"
             >
-              About
-            </a>
-          </li>
-          <li className='w-full'>
-            <a
-              href="#projects"
-              className='block text-center py-4 hover:bg-zinc-700 border-b border-zinc-700 transition-colors duration-200'
-              onClick={toggleMenu}
-            >
-              Projects
-            </a>
-          </li>
-          <li className='w-full'>
-            <a
-              href="#skills"
-              className='block text-center py-4 hover:bg-zinc-700 border-b border-zinc-700 transition-colors duration-200'
-              onClick={toggleMenu}
-            >
-              Skills
-            </a>
-          </li>
-          <li className='w-full'>
-            <a
-              href="#about"
-              className='block text-center py-4 hover:bg-zinc-700 transition-colors duration-200'
-              onClick={toggleMenu}
-            >
-              Contact
-            </a>
-          </li>
-        </ul>
-      </nav>
+              <NavLinks mobile onClick={toggleMenu} />
+            </motion.nav>
 
-      {menuOpen && (
-        <div onClick={toggleMenu} className="fixed inset-0 z-10 bg-black/10 sm:hidden"></div>
-      )}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={toggleMenu}
+              className="fixed inset-0 z-10 bg-black/20 sm:hidden"
+            />
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 };
