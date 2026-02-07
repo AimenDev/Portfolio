@@ -71,7 +71,7 @@ const Hero = () => {
       >
         {/* Logo section */}
         <motion.div
-          className="mb-16 sm:mb-20"
+          className="mb-10 sm:mb-16"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.5 }}
@@ -83,11 +83,11 @@ const Hero = () => {
             className="inline-block"
           >
             <img
-              src="./images-modified.png"
+              src="./Mr You.jpg"
               alt="Logo"
-              width={80}
-              height={50}
-              className="transition-transform duration-300 rounded-md shadow-lg"
+              width={120}
+              height={100}
+              className="transition-transform duration-300 rounded-full shadow-lg object-cover"
             />
           </motion.a>
         </motion.div>
