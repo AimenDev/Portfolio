@@ -7,12 +7,12 @@ const Skills = () => {
     frontend: {
       icon: Code2,
       title: "Frontend",
-      items: ["JavaScript", "HTML", "CSS", "React", "Next.js", "Tailwind CSS"]
+      items: ["JavaScript", "TypeScript", "HTML", "CSS", "React", "Next.js", "Tailwind CSS"]
     },
     backend: {
       icon: Server,
       title: "Backend",
-      items: ["Node.js", "Express", "MongoDB", "GraphQL", "REST APIs"]
+      items: ["Node.js", "Express", "MongoDB", "PostgreSQL", "GraphQL", "REST APIs"]
     },
     tools: {
       icon: Wrench,
