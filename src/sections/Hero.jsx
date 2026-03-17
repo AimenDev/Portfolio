@@ -77,7 +77,7 @@ const Hero = () => {
           transition={{ delay: 0.1, duration: 0.5 }}
         >
           <motion.a
-            href="/"
+            href="/Portfolio/"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="inline-block"
