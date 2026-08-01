@@ -1,8 +1,8 @@
-import Header from "./sections/Header.jsx";
+import Header from "./sections/Header";
 import Hero from "./sections/Hero";
 import Main from "./sections/Main";
 import Footer from "./sections/Footer";
-import Skills from "./sections/Skills.jsx";
+import Skills from "./sections/Skills";
 import scrollreveal from "scrollreveal";
 import { useEffect } from "react";
 

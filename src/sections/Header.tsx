@@ -1,13 +1,22 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Menu, Sun, Moon, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface NavItem {
+  href: string;
+  label: string;
+}
+
+interface NavLinksProps {
+  mobile?: boolean;
+  onClick?: () => void;
+}
+
 const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrollingUp, setScrollingUp] = useState(true);
-  const [lastScrollPos, setLastScrollPos] = useState(0);
-  const [theme, setTheme] = useState(() => {
-    // Check if user has a saved theme preference
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [scrollingUp, setScrollingUp] = useState<boolean>(true);
+  const [lastScrollPos, setLastScrollPos] = useState<number>(0);
+  const [theme, setTheme] = useState<boolean>(() => {
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "dark";
   });
@@ -22,7 +31,6 @@ const Header = () => {
 
   const toggleMenu = useCallback(() => {
     setMenuOpen((prev) => !prev);
-    // Prevent scrolling when menu is open
     document.body.style.overflow = !menuOpen ? "hidden" : "unset";
   }, [menuOpen]);
 
@@ -59,18 +67,18 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollPos]);
 
-  const navItems = [
+  const navItems: NavItem[] = [
     { href: "#about", label: "About" },
     { href: "#projects", label: "Projects" },
     { href: "#skills", label: "Skills" },
     { href: "#about", label: "Contact" },
   ];
 
-  const NavLinks = ({ mobile = false, onClick }) => (
+  const NavLinks = ({ mobile = false, onClick }: NavLinksProps) => (
     <ul
       className={`${mobile ? "text-2xl w-full" : "flex space-x-10 text-sm"} font-sans text-gray-100 dark:text-black`}
     >
-      {navItems.map(({ href, label }, index) => (
+      {navItems.map(({ href, label }) => (
         <li key={href} className={mobile ? "w-full" : ""}>
           <a
             href={href}

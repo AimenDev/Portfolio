@@ -1,8 +1,15 @@
-import React from 'react';
 import Card from '../components/Card';
-import { Github, SquareArrowOutUpRight } from 'lucide-react';
 
-const projects = [
+interface Project {
+  image: string;
+  title: string;
+  description: string;
+  languages: string[];
+  githubLink: string;
+  liveDemoLink: string;
+}
+
+const projects: Project[] = [
   {
     image: "./E-commerce.png",
     title: "E-Commerce Store",
@@ -57,7 +64,7 @@ const Main = () => {
   return (
     <section className="py-16 xl:px-16 bg-transparent border-t border-white dark:border-neutral-700" id='projects'>
       <div className="container mx-auto">
-        <h2 className="text-3xl font-bold font-roboto text-center mb-20 text-white dark:text-neutral-900">Things I’ve made</h2>
+        <h2 className="text-3xl font-bold font-roboto text-center mb-20 text-white dark:text-neutral-900">Things I've made</h2>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-4">
           {projects.map((project, index) => (
             <Card

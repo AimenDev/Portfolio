@@ -1,9 +1,20 @@
-import React from "react";
 import { motion } from "framer-motion";
-import { Code2, Server, Wrench } from "lucide-react";
+import { Code2, Server, Wrench, type LucideIcon } from "lucide-react";
+
+interface SkillCategory {
+  icon: LucideIcon;
+  title: string;
+  items: string[];
+}
+
+interface SkillCardProps {
+  title: string;
+  items: string[];
+  icon: LucideIcon;
+}
 
 const Skills = () => {
-  const skills = {
+  const skills: Record<string, SkillCategory> = {
     frontend: {
       icon: Code2,
       title: "Frontend",
@@ -39,7 +50,7 @@ const Skills = () => {
     }
   };
 
-  const SkillCard = ({ title, items, icon: Icon }) => (
+  const SkillCard = ({ title, items, icon: Icon }: SkillCardProps) => (
     <motion.div
       variants={itemVariants}
       whileHover={{ y: -5 }}

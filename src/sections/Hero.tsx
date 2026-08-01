@@ -1,4 +1,3 @@
-import React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import {
   FileText,
@@ -8,9 +7,22 @@ import {
   Linkedin,
   Twitter,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
-const socialLinks = [
+interface SocialLinkData {
+  name: string;
+  href: string;
+  icon: LucideIcon;
+}
+
+interface SocialIconProps {
+  href: string;
+  icon: LucideIcon;
+  name: string;
+}
+
+const socialLinks: SocialLinkData[] = [
   {
     name: "Instagram",
     href: "https://www.instagram.com",
@@ -33,7 +45,7 @@ const socialLinks = [
   },
 ];
 
-const SocialIcon = ({ href, icon: Icon, name }) => (
+const SocialIcon = ({ href, icon: Icon, name }: SocialIconProps) => (
   <motion.a
     href={href}
     target="_blank"

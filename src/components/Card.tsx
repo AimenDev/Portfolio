@@ -1,7 +1,15 @@
-import React from 'react';
 import { Github, SquareArrowOutUpRight } from 'lucide-react';
 
-const Card = ({ image, title, description, languages, githubLink, liveDemoLink }) => {
+interface CardProps {
+  image: string;
+  title: string;
+  description: string;
+  languages: string[];
+  githubLink?: string;
+  liveDemoLink?: string;
+}
+
+const Card = ({ image, title, description, languages, githubLink, liveDemoLink }: CardProps) => {
   return (
     <div className="bg-transparent border border-gray-700 shadow-md dark:shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:border-emerald-400">
       <img src={image} alt={title} className="w-full h-48 object-cover" />

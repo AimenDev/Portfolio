@@ -1,9 +1,21 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Github, Linkedin, Instagram, Twitter, ArrowUp, ExternalLink } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+
+interface SocialLinkData {
+  icon: LucideIcon;
+  href: string;
+  label: string;
+}
+
+interface SocialIconProps {
+  icon: LucideIcon;
+  href: string;
+  label: string;
+}
 
 const Footer = () => {
-  const socialLinks = [
+  const socialLinks: SocialLinkData[] = [
     {
       icon: Instagram,
       href: "https://www.instagram.com",
@@ -26,11 +38,11 @@ const Footer = () => {
     }
   ];
 
-  const scrollToTop = () => {
+  const scrollToTop = (): void => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const SocialIcon = ({ icon: Icon, href, label }) => (
+  const SocialIcon = ({ icon: Icon, href, label }: SocialIconProps) => (
     <motion.a
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
