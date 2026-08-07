@@ -5,6 +5,7 @@ import Footer from "./sections/Footer";
 import Skills from "./sections/Skills";
 import scrollreveal from "scrollreveal";
 import { useEffect } from "react";
+import Education from "./sections/Education";
 
 const App = () => {
   useEffect(() => {
@@ -30,6 +31,7 @@ const App = () => {
     <main className="bg-zinc-800 dark:bg-zinc-100 space-y-8 shadow-lg w-full sm:w-[90%] 2xl:w-[65%] mx-auto py-0 px-7">
       <Header />
       <Hero />
+      <Education />
       <Main />
       <Skills />
       <Footer />

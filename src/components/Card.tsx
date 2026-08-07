@@ -11,28 +11,58 @@ interface CardProps {
 
 const Card = ({ image, title, description, languages, githubLink, liveDemoLink }: CardProps) => {
   return (
-    <div className="bg-transparent border border-gray-700 shadow-md dark:shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:border-emerald-400">
-      <img src={image} alt={title} className="w-full h-48 object-cover" />
-      <div className="p-4">
-        <div className="flex justify-between items-center mb-2">
-          <h3 className="text-lg font-bold text-white dark:text-neutral-900 font-sans">{title}</h3>
-          <div className="flex gap-2">
+    <div className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/40 dark:border-neutral-900/10 dark:bg-neutral-900/[0.02]">
+      {/* Image */}
+      <div className="relative h-44 w-full overflow-hidden">
+        <img
+          src={image}
+          alt={title}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F0E] to-transparent opacity-60 dark:from-neutral-50" />
+      </div>
+
+      <div className="p-5">
+        <div className="mb-2 flex items-start justify-between gap-3">
+          <h3 className="text-base font-semibold text-neutral-100 dark:text-neutral-900">
+            {title}
+          </h3>
+          <div className="flex shrink-0 gap-1.5">
             {githubLink && (
-              <a href={githubLink} target="_blank" rel="noopener noreferrer" className="text-gray-300 dark:text-neutral-900  hover:text-white">
-                <Github className="w-5 h-5" />
+              <a
+                href={githubLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${title} on GitHub`}
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-neutral-400 transition-colors duration-200 hover:border-emerald-400/40 hover:text-emerald-400 dark:border-neutral-900/10 dark:text-neutral-500"
+              >
+                <Github className="h-4 w-4" />
               </a>
             )}
             {liveDemoLink && (
-              <a href={liveDemoLink} target="_blank" rel="noopener noreferrer" className="text-gray-300 dark:text-neutral-900 hover:text-white">
-                <SquareArrowOutUpRight className="w-5 h-5" />
+              <a
+                href={liveDemoLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${title} live demo`}
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-neutral-400 transition-colors duration-200 hover:border-emerald-400/40 hover:text-emerald-400 dark:border-neutral-900/10 dark:text-neutral-500"
+              >
+                <SquareArrowOutUpRight className="h-4 w-4" />
               </a>
             )}
           </div>
         </div>
-        <p className="text-neutral-400 dark:text-neutral-600 mb-4">{description}</p>
-        <div className="flex flex-wrap gap-2 font-fira">
+
+        <p className="mb-4 text-sm leading-relaxed text-neutral-400 dark:text-neutral-600">
+          {description}
+        </p>
+
+        <div className="flex flex-wrap gap-1.5 font-fira">
           {languages.map((lang, index) => (
-            <span key={index} className="bg-gray-200 dark:bg-gray-300 text-gray-800 text-sm font-medium px-2 py-1 rounded">
+            <span
+              key={index}
+              className="rounded-md border border-white/10 px-2 py-1 text-xs text-neutral-300 dark:border-neutral-900/10 dark:text-neutral-600"
+            >
               {lang}
             </span>
           ))}

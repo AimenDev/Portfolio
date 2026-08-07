@@ -12,10 +12,49 @@ interface NavLinksProps {
   onClick?: () => void;
 }
 
+const navItems: NavItem[] = [
+  { href: "#about", label: "About" },
+  { href: "#projects", label: "Projects" },
+  { href: "#skills", label: "Skills" },
+  {
+    href: "mailto:aimendev4@gmail.com?subject=Let's%20Work%20Together",
+    label: "Contact",
+  },
+];
+
+const NavLinks = ({ mobile = false, onClick }: NavLinksProps) => (
+  <ul
+    className={
+      mobile
+        ? "flex w-full flex-col items-center gap-1 font-fira text-xl"
+        : "flex items-center gap-8 font-fira text-sm"
+    }
+  >
+    {navItems.map(({ href, label }) => (
+      <li key={label} className={mobile ? "w-full" : ""}>
+        <a
+          href={href}
+          onClick={onClick}
+          className={
+            mobile
+              ? "group flex items-center justify-center gap-2 border-b border-white/5 py-4 text-neutral-300 transition-colors duration-200 hover:text-emerald-400 dark:border-neutral-900/5 dark:text-neutral-700"
+              : "group relative text-neutral-300 transition-colors duration-200 hover:text-emerald-400 dark:text-neutral-700"
+          }
+        >
+          {label}
+          {!mobile && (
+            <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-emerald-400 transition-all duration-200 group-hover:w-full" />
+          )}
+        </a>
+      </li>
+    ))}
+  </ul>
+);
+
 const Header = () => {
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const [scrollingUp, setScrollingUp] = useState<boolean>(true);
-  const [lastScrollPos, setLastScrollPos] = useState<number>(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [lastScrollPos, setLastScrollPos] = useState(0);
   const [theme, setTheme] = useState<boolean>(() => {
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "dark";
@@ -23,145 +62,111 @@ const Header = () => {
 
   const toggleTheme = useCallback(() => {
     setTheme((prev) => {
-      const newTheme = !prev;
-      localStorage.setItem("theme", newTheme ? "dark" : "light");
-      return newTheme;
+      const next = !prev;
+      localStorage.setItem("theme", next ? "dark" : "light");
+      return next;
     });
   }, []);
 
-  const toggleMenu = useCallback(() => {
-    setMenuOpen((prev) => !prev);
-    document.body.style.overflow = !menuOpen ? "hidden" : "unset";
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme);
+  }, [theme]);
+
+  // Body scroll lock lives in its own effect keyed on menuOpen, instead of
+  // reading a stale value inside the click handler.
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "unset";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [menuOpen]);
 
   useEffect(() => {
-    if (theme) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
-  useEffect(() => {
-    let lastKnownScrollPosition = 0;
     let ticking = false;
-
     const handleScroll = () => {
-      lastKnownScrollPosition = window.scrollY;
-
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          if (lastKnownScrollPosition > lastScrollPos) {
-            setScrollingUp(false);
-          } else {
-            setScrollingUp(true);
-          }
-          setLastScrollPos(lastKnownScrollPosition);
-          ticking = false;
-        });
-        ticking = true;
-      }
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        const current = window.scrollY;
+        setHidden(current > lastScrollPos && current > 80);
+        setLastScrollPos(current);
+        ticking = false;
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollPos]);
 
-  const navItems: NavItem[] = [
-    { href: "#about", label: "About" },
-    { href: "#projects", label: "Projects" },
-    { href: "#skills", label: "Skills" },
-    { href: "#about", label: "Contact" },
-  ];
-
-  const NavLinks = ({ mobile = false, onClick }: NavLinksProps) => (
-    <ul
-      className={`${mobile ? "text-2xl w-full" : "flex space-x-10 text-sm"} font-sans text-gray-100 dark:text-black`}
-    >
-      {navItems.map(({ href, label }) => (
-        <li key={href} className={mobile ? "w-full" : ""}>
-          <a
-            href={href}
-            onClick={onClick}
-            className={`${
-              mobile
-                ? "block text-center py-4 hover:bg-zinc-700 dark:hover:bg-white/10 border-b border-zinc-700/50 last:border-none"
-                : "hover:text-emerald-400"
-            } transition-all duration-200 relative group`}
-          >
-            {label}
-            {!mobile && (
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-400 transition-all duration-200 group-hover:w-full" />
-            )}
-          </a>
-        </li>
-      ))}
-    </ul>
-  );
-
   return (
-    <header className="flex items-center justify-center mb-10">
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{
-          y: scrollingUp ? 0 : -100,
-          transition: { type: "spring", stiffness: 100, damping: 20 },
-        }}
-        className="mt-20 z-20 fixed hidden md:flex px-10 py-3 bg-zinc-800/95 dark:bg-white/95 backdrop-blur-md rounded-full shadow-lg"
+    <header>
+      <motion.div
+        initial={{ y: 0 }}
+        animate={{ y: hidden ? "-110%" : 0 }}
+        transition={{ type: "spring", stiffness: 120, damping: 22 }}
+        className="fixed inset-x-0 top-0 z-40 border-b border-white/5 bg-[#0B0F0E]/80 backdrop-blur-md dark:border-neutral-900/5 dark:bg-white/80"
       >
-        <NavLinks />
-      </motion.nav>
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4 sm:px-8">
+          {/* Brand */}
+          <a
+            href="/"
+            className="font-fira text-sm font-medium text-neutral-200 dark:text-neutral-800"
+          >
+            aimen<span className="text-emerald-400">.</span>dev
+          </a>
 
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={toggleTheme}
-        aria-label={theme ? "Switch to light mode" : "Switch to dark mode"}
-        className="absolute top-7 z-30 sm:ml-[60%] ml-28 p-2 text-gray-100 bg-zinc-700 dark:bg-white dark:shadow-lg rounded-full hover:ring-2 hover:ring-emerald-400 transition-all duration-200"
-      >
-        {theme ? (
-          <Sun className="dark:text-emerald-400" size={24} />
-        ) : (
-          <Moon className="text-emerald-400" size={24} />
-        )}
-      </motion.button>
+          {/* Desktop nav */}
+          <nav className="hidden md:block">
+            <NavLinks />
+          </nav>
 
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={toggleMenu}
-        aria-label={menuOpen ? "Close menu" : "Open menu"}
-        aria-expanded={menuOpen}
-        className="bg-zinc-700 dark:bg-white dark:shadow-lg text-gray-100 p-3 absolute rounded-full md:hidden top-6 right-10 z-30 shadow-lg hover:ring-2 hover:ring-emerald-400 transition-all duration-200"
-      >
-        {menuOpen ? (
-          <X className="dark:text-emerald-400" size={24} />
-        ) : (
-          <Menu className="dark:text-emerald-400" size={24} />
-        )}
-      </motion.button>
+          {/* Controls */}
+          <div className="flex items-center gap-2">
+            <motion.button
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleTheme}
+              aria-label={theme ? "Switch to light mode" : "Switch to dark mode"}
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-neutral-300 transition-colors duration-200 hover:border-emerald-400/40 hover:text-emerald-400 dark:border-neutral-900/10 dark:text-neutral-600"
+            >
+              {theme ? <Sun size={16} /> : <Moon size={16} />}
+            </motion.button>
 
+            <motion.button
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setMenuOpen((prev) => !prev)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-neutral-300 transition-colors duration-200 hover:border-emerald-400/40 hover:text-emerald-400 dark:border-neutral-900/10 dark:text-neutral-600 md:hidden"
+            >
+              {menuOpen ? <X size={16} /> : <Menu size={16} />}
+            </motion.button>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Mobile menu */}
       <AnimatePresence>
         {menuOpen && (
           <>
-            <motion.nav
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 20 }}
-              className="fixed inset-0 z-20 bg-zinc-800/95 dark:bg-white/95 backdrop-blur-md p-10 flex flex-col space-y-4 items-center justify-center md:hidden"
-            >
-              <NavLinks mobile onClick={toggleMenu} />
-            </motion.nav>
-
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              onClick={toggleMenu}
-              className="fixed inset-0 z-10 bg-black/20 sm:hidden"
+              onClick={() => setMenuOpen(false)}
+              className="fixed inset-0 z-30 bg-black/40 md:hidden"
             />
+            <motion.nav
+              initial={{ y: "-100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-100%" }}
+              transition={{ type: "spring", damping: 24, stiffness: 200 }}
+              className="fixed inset-x-0 top-0 z-40 flex flex-col items-center gap-6 border-b border-white/5 bg-[#0B0F0E] px-6 pb-8 pt-24 dark:border-neutral-900/5 dark:bg-white md:hidden"
+            >
+              <NavLinks mobile onClick={() => setMenuOpen(false)} />
+            </motion.nav>
           </>
         )}
       </AnimatePresence>
