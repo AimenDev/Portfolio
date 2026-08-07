@@ -1,41 +1,49 @@
+import { useEffect } from "react";
+import ScrollReveal from "scrollreveal";
+
 import Header from "./sections/Header";
 import Hero from "./sections/Hero";
-import Main from "./sections/Main";
-import Footer from "./sections/Footer";
-import Skills from "./sections/Skills";
-import scrollreveal from "scrollreveal";
-import { useEffect } from "react";
 import Education from "./sections/Education";
+import Main from "./sections/Main";
+import Skills from "./sections/Skills";
+import Footer from "./sections/Footer";
 
 const App = () => {
   useEffect(() => {
-    const sr = scrollreveal({
+    const sr = ScrollReveal({
       origin: "top",
-      distance: "90px",
-      duration: 1000,
-      reset: true,
+      distance: "50px",
+      duration: 800,
+      delay: 100,
+      opacity: 0,
+      easing: "ease-out",
+      reset: false,
+      cleanup: true,
     });
-    sr.reveal(
-      `
-        #projects,
-        #skills,
-        footer
-        `,
-      {
-        opacity: 0,
-        interval: 300,
-      }
-    );
+
+    sr.reveal("#education");
+    sr.reveal("#projects", { delay: 150 });
+    sr.reveal("#skills", { delay: 150 });
+    sr.reveal("footer", { delay: 100 });
+
+    return () => {
+      sr.destroy();
+    };
   }, []);
+
   return (
-    <main className="bg-zinc-800 dark:bg-zinc-100 space-y-8 shadow-lg w-full sm:w-[90%] 2xl:w-[65%] mx-auto py-0 px-7">
+    <div className="min-h-screen bg-[#0B0F0E] text-neutral-100 dark:bg-neutral-50 dark:text-neutral-900">
       <Header />
-      <Hero />
-      <Education />
-      <Main />
-      <Skills />
+
+      <main>
+        <Hero />
+        <Education />
+        <Main />
+        <Skills />
+      </main>
+
       <Footer />
-    </main>
+    </div>
   );
 };
 
